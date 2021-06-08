@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand">Welcome {{username}}</a>
+      <a style="text-decoration: none; color: black;" class="nav-item" href="/userorders/">My Orders</a>
+     <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+      <a href="/userlogout/" class="btn btn-danger">Logout</a>
+    </div>
+     
+  </nav>
+  {% for message in messages %}
+  <p style="color: green; text-align: center;">{{message}}</p>
+  {% endfor %}
+
+  <form method="POST" action="/placeorder/">
+    {% csrf_token %}
+<div class="container" style="margin:auto; width: 600px;">
+    <table style="width: 100%;">
+        <tr>
+            <th>Pizza</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    
+        {% for pizza in pizzas %}
+        <tr>
+            <td>{{pizza.name}}</td>
+            <td>{{pizza.price}}</td>
+            <td><input type="number" min="0" value="0" name="{{pizza.id}}" style="width:70px;" name="quantity"></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <input type="text" placeholder="address" style="width:400px; margin-top:110px" name="address">
+    <input type="submit" style="float: right; margin-top: 100px;" class="btn btn-outline-success" value="place order" name="">
+</div>
+</form>
+
+
+{% endblock %}
